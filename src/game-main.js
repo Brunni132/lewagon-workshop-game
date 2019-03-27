@@ -10,6 +10,29 @@ function collidesAt(x, y) {
 	return getMapBlock('level1', blockX, blockY) === 38;
 }
 
+function moveMario(mario) {
+	mario.left += mario.horizontalVelocity;
+	while (collidesAt(mario.right, mario.top) || collidesAt(mario.right, mario.bottom)) {
+		mario.left -= 1;
+		mario.horizontalVelocity = 0;
+	}
+	while (collidesAt(mario.left, mario.top) || collidesAt(mario.left, mario.bottom)) {
+		mario.left += 1;
+		mario.horizontalVelocity = 0;
+	}
+
+	mario.top += mario.verticalVelocity;
+	while (collidesAt(mario.left, mario.bottom) || collidesAt(mario.right, mario.bottom)) {
+		mario.top -= 1;
+		mario.verticalVelocity = 0;
+	}
+	while (collidesAt(mario.left, mario.top) || collidesAt(mario.right, mario.top)) {
+		mario.top += 1;
+		mario.verticalVelocity = 0;
+	}
+}
+
+
 function *main() {
 	const input = vdp.input;
 
@@ -23,7 +46,7 @@ function *main() {
 		horizontalVelocity: 0,
 		verticalVelocity: 0
 	};
-	const acceleration = 0.5;
+	const acceleration = 0.2, gravity = 0.4, jumpImpulse = -7;
 
 	vdp.configBackdropColor('#084');
 
@@ -34,34 +57,15 @@ function *main() {
 
 		if (input.isDown(input.Key.Left)) mario.horizontalVelocity -= acceleration;
 		else if (input.isDown(input.Key.Right)) mario.horizontalVelocity += acceleration;
-		else mario.horizontalVelocity *= 0.9;
+		else mario.horizontalVelocity *= 0.95;
 
-		if (input.isDown(input.Key.Up)) mario.verticalVelocity -= acceleration;
-		else if (input.isDown(input.Key.Down)) mario.verticalVelocity += acceleration;
-		else mario.verticalVelocity *= 0.9;
+		mario.verticalVelocity += gravity;
+		if (input.hasToggledDown(input.Key.A)) {
+			mario.verticalVelocity =jumpImpulse;
+		}
 
 		mario.horizontalVelocity = clamp(mario.horizontalVelocity, -4, +4);
-		mario.verticalVelocity = clamp(mario.verticalVelocity, -4, +4);
-
-		mario.left += mario.horizontalVelocity;
-		while (collidesAt(mario.right, mario.top) || collidesAt(mario.right, mario.bottom)) {
-			mario.left -= 1;
-			mario.horizontalVelocity = 0;
-		}
-		while (collidesAt(mario.left, mario.top) || collidesAt(mario.left, mario.bottom)) {
-			mario.left += 1;
-			mario.horizontalVelocity = 0;
-		}
-
-		mario.top += mario.verticalVelocity;
-		while (collidesAt(mario.left, mario.bottom) || collidesAt(mario.right, mario.bottom)) {
-			mario.top -= 1;
-			mario.verticalVelocity = 0;
-		}
-		while (collidesAt(mario.left, mario.top) || collidesAt(mario.right, mario.top)) {
-			mario.top += 1;
-			mario.verticalVelocity = 0;
-		}
+		moveMario(mario);
 
 		yield;
 	}
