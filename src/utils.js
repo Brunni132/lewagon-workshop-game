@@ -1,5 +1,8 @@
 import {startGame, vdp} from "../lib/vdp-lib";
 
+export function clamp(val, min, max) {
+    return Math.max(min, Math.min(max, val));
+}
 
 export function getMapBlock(name, x, y) {
 	const mapData = vdp.readMap(vdp.map(name).offset(x, y, 1, 1));

@@ -1,5 +1,5 @@
 import {startGame, vdp} from "../lib/vdp-lib";
-import {getMapBlock, setMapBlock} from './utils';
+import {clamp, getMapBlock, setMapBlock} from './utils';
 
 const tileSize = 16;
 
@@ -20,8 +20,10 @@ function *main() {
 		height: vdp.sprite('mario').tile(6).h,
 		get right() { return this.left + this.width; },
 		get bottom() { return this.top + this.height; },
+		horizontalVelocity: 0,
+		verticalVelocity: 0
 	};
-	const moveSpeed = 1;
+	const acceleration = 0.5;
 
 	vdp.configBackdropColor('#084');
 
@@ -30,29 +32,35 @@ function *main() {
 		// We need to use the tile no 6 for the standing Mario
 		vdp.drawObject(vdp.sprite('mario').tile(6), mario.left, mario.top);
 
-		const movement = {
-			x: 0,
-			y: 0
-		};
-		if (input.isDown(input.Key.Left)) movement.x -= moveSpeed;
-		if (input.isDown(input.Key.Right)) movement.x += moveSpeed;
-		if (input.isDown(input.Key.Up)) movement.y -= moveSpeed;
-		if (input.isDown(input.Key.Down)) movement.y += moveSpeed;
+		if (input.isDown(input.Key.Left)) mario.horizontalVelocity -= acceleration;
+		else if (input.isDown(input.Key.Right)) mario.horizontalVelocity += acceleration;
+		else mario.horizontalVelocity *= 0.9;
 
-		mario.left += movement.x;
+		if (input.isDown(input.Key.Up)) mario.verticalVelocity -= acceleration;
+		else if (input.isDown(input.Key.Down)) mario.verticalVelocity += acceleration;
+		else mario.verticalVelocity *= 0.9;
+
+		mario.horizontalVelocity = clamp(mario.horizontalVelocity, -4, +4);
+		mario.verticalVelocity = clamp(mario.verticalVelocity, -4, +4);
+
+		mario.left += mario.horizontalVelocity;
 		while (collidesAt(mario.right, mario.top) || collidesAt(mario.right, mario.bottom)) {
 			mario.left -= 1;
+			mario.horizontalVelocity = 0;
 		}
 		while (collidesAt(mario.left, mario.top) || collidesAt(mario.left, mario.bottom)) {
 			mario.left += 1;
+			mario.horizontalVelocity = 0;
 		}
 
-		mario.top += movement.y;
+		mario.top += mario.verticalVelocity;
 		while (collidesAt(mario.left, mario.bottom) || collidesAt(mario.right, mario.bottom)) {
 			mario.top -= 1;
+			mario.verticalVelocity = 0;
 		}
 		while (collidesAt(mario.left, mario.top) || collidesAt(mario.right, mario.top)) {
 			mario.top += 1;
+			mario.verticalVelocity = 0;
 		}
 
 		yield;
