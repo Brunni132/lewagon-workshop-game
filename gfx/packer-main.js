@@ -7,4 +7,14 @@ config({ compact: true, debug: false }, () => {
 	palette('mario', () => {
 		tileset('mario', image('mario.png'), 16, 16);
 	});
+
+	palette('level1', () => {
+		tiledMap('level1', 'mario-1-1', { tileWidth: 16, tileHeight: 16, tilesetWidth: 16, tilesetHeight: 16 });
+	});
+
+	palette('text', () => {
+		tileset('text', 'defaultFont.png', 8, 8, () => {
+			map('text', blank(Math.ceil(SCREEN_WIDTH / 8), Math.ceil(SCREEN_HEIGHT / 8)));
+		});
+	});
 });
