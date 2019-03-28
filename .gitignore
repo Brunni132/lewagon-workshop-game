@@ -15,7 +15,6 @@ gfx/mario-1-1-til.png
 
 
 packer.exe
-lib/**
 temp/**
 temp-esm/**
 
