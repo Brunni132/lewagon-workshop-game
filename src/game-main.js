@@ -21,12 +21,19 @@ function *main() {
 	const input = vdp.input;
 	vdp.configBackdropColor('#59f');
 
+	let counter = 0;
 	while (true) {
 		vdp.drawBackgroundTilemap('level1', { scrollX: 200 });
 		vdp.drawObject(vdp.sprite('mario').tile(6), mario.left, mario.top, { flipH: true});
 
+		counter += 1;
+		const colors = [
+			'#f00', '#f80', '#ff0', '#ff0', '#f80', '#f00'
+		];
 		const paletteData = vdp.readPalette('level1');
-		paletteData.array[7] = vdp.color.make('#f00');
+		paletteData.array[7] = vdp.color.make(
+			colors[Math.floor(counter / 8) % colors.length]
+		);
 		vdp.writePalette('level1', paletteData);
 
 		mario.verticalVelocity += 0.2;
