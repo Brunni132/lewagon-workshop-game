@@ -22,29 +22,49 @@ function *main() {
 	vdp.configBackdropColor('#59f');
 
 	while (true) {
-		vdp.drawBackgroundTilemap('level1');
-		vdp.drawObject(vdp.sprite('mario').tile(6), mario.left, mario.top);
+		vdp.drawBackgroundTilemap('level1', { scrollX: 200 });
+		vdp.drawObject(vdp.sprite('mario').tile(6), mario.left, mario.top, { flipH: true});
 
-		mario.left += mario.horizontalVelocity;
+		const paletteData = vdp.readPalette('level1');
+		paletteData.array[7] = vdp.color.make('#f00');
+		vdp.writePalette('level1', paletteData);
+
+		mario.verticalVelocity += 0.2;
+
 		mario.top += mario.verticalVelocity;
-
-		mario.verticalVelocity += 0.1;
-		while (collidesAtPosition(mario.left, mario.bottom)) {
+		mario.top = Math.floor(mario.top);
+		while (collidesAtPosition(mario.left, mario.bottom) || collidesAtPosition(mario.right, mario.bottom)) {
 			mario.verticalVelocity = 0;
 			mario.top -= 1;
 		}
+		while (collidesAtPosition(mario.left, mario.top) || collidesAtPosition(mario.right, mario.top)) {
+			mario.verticalVelocity = 0;
+			mario.top += 1;
+		}
 
-		// if (input.isDown(input.Key.Up)) {
-		// 	mario.top -= 1;
-		// }
-		// if (input.isDown(input.Key.Down)) {
-		// 	mario.top += 1;
-		// }
-		if (input.isDown(input.Key.Left)) {
+		mario.left += mario.horizontalVelocity;
+		mario.left = Math.floor(mario.left);
+		while (collidesAtPosition(mario.left, mario.top) || collidesAtPosition(mario.left, mario.bottom)) {
+			mario.horizontalVelocity = 0;
+			mario.left += 1;
+		}
+		while (collidesAtPosition(mario.right, mario.top) || collidesAtPosition(mario.right, mario.bottom)) {
+			mario.horizontalVelocity = 0;
 			mario.left -= 1;
 		}
-		if (input.isDown(input.Key.Right)) {
-			mario.left += 1;
+
+		if (input.hasToggledDown(input.Key.Up)) {
+			mario.verticalVelocity = -5;
+		}
+
+		if (input.isDown(input.Key.Left)) {
+			mario.horizontalVelocity = -1;
+		}
+		else if (input.isDown(input.Key.Right)) {
+			mario.horizontalVelocity = +1;
+		}
+		else {
+			mario.horizontalVelocity = 0;
 		}
 
 
