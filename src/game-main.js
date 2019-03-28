@@ -10,20 +10,35 @@ function *main() {
 	const mario = {
 		left: 0,
 		top: 0,
-		width: 16,
-		height: 16,
+		width: 32,
+		height: 32,
 		get right() { return this.left + this.width; },
 		get bottom() { return this.top + this.height; },
 		horizontalVelocity: 0,
 		verticalVelocity: 0,
+		direction: 1
+	};
+	const camera = {
+		left: 0,
+		top: 0
 	};
 
 	const input = vdp.input;
+	let counter = 0;
 	vdp.configBackdropColor('#59f');
 
 	while (true) {
-		vdp.drawBackgroundTilemap('level1', { scrollX: 200 });
-		vdp.drawObject(vdp.sprite('mario').tile(6), mario.left, mario.top, { flipH: true});
+		counter += 1;
+		vdp.drawBackgroundTilemap('level1', { scrollX: camera.left });
+		vdp.drawObject(vdp.sprite('mario').tile(Math.floor(counter / 8) % 3), mario.left - camera.left, mario.top, {
+			width: mario.width,
+			height: mario.height,
+			flipH: mario.direction < 0
+		});
+
+		if (mario.left - camera.left > vdp.screenWidth / 2) {
+			camera.left = mario.left - vdp.screenWidth / 2;
+		}
 
 		const paletteData = vdp.readPalette('level1');
 		paletteData.array[7] = vdp.color.make('#f00');
@@ -59,9 +74,11 @@ function *main() {
 
 		if (input.isDown(input.Key.Left)) {
 			mario.horizontalVelocity = -1;
+			mario.direction = -1;
 		}
 		else if (input.isDown(input.Key.Right)) {
 			mario.horizontalVelocity = +1;
+			mario.direction = +1;
 		}
 		else {
 			mario.horizontalVelocity = 0;
