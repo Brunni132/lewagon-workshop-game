@@ -23,7 +23,13 @@ function *main() {
 
 	let counter = 0;
 	while (true) {
-		vdp.drawBackgroundTilemap('level1', { scrollX: 200 });
+		const lineTransform = new vdp.LineTransformationArray();
+		for (let line = 0; line < 256; line++) {
+			const x = Math.sin((line + counter) / 20) * 10;
+			lineTransform.translateLine(line, [x, 0]);
+		}
+
+		vdp.drawBackgroundTilemap('level1', { scrollX: 200, lineTransform });
 		vdp.drawObject(vdp.sprite('mario').tile(6), mario.left, mario.top, { flipH: true});
 
 		counter += 1;
@@ -35,6 +41,12 @@ function *main() {
 			colors[Math.floor(counter / 8) % colors.length]
 		);
 		vdp.writePalette('level1', paletteData);
+
+		const colorArray = new vdp.LineColorArray(0, 0);
+		for (let line = 0; line < colorArray.length; line++) {
+			colorArray.setLine(line, vdp.color.make(255, line, line));
+		}
+		vdp.configColorSwap([colorArray]);
 
 		mario.verticalVelocity += 0.2;
 
