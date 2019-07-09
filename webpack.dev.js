@@ -1,4 +1,5 @@
 const path = require('path');
+const WatchFilesPlugin = require('webpack-watch-files-plugin').default;
 
 module.exports = {
 	entry: './src/game-main.js',
@@ -6,6 +7,13 @@ module.exports = {
 	devServer: {
 		open: true
 	},
+	plugins: [
+		new WatchFilesPlugin({ // TODO doesn't trigger HRM, debug…
+			files: [
+				'./build/game.json'
+			]
+		})
+	],
 	resolve: {
 		extensions: [ '.js' ]
 	},
