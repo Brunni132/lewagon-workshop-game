@@ -1,4 +1,4 @@
-import {startGame, vdp} from "../lib/vdp-lib";
+import {startGame, vdp, color} from "../lib/vdp-lib";
 import {clamp, getMapBlock, setMapBlock} from './utils';
 
 function *main() {

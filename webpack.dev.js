@@ -3,6 +3,9 @@ const path = require('path');
 module.exports = {
 	entry: './src/game-main.js',
 	devtool: 'inline-source-map',
+	devServer: {
+		open: true
+	},
 	resolve: {
 		extensions: [ '.js' ]
 	},
