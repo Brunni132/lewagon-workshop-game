@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import { mat3, mat4, vec2 } from 'gl-matrix';
 
 declare class VdpMap {
@@ -170,13 +172,12 @@ declare class LineTransformationArray {
 	length: number;
 	constructor();
 	getLine(lineNo: number): Float32Array;
-	identityAll(): void;
-	identityLine(lineNo: number): void;
 	resetAll(): void;
 	resetLine(lineNo: number): void;
 	rotateLine(lineNo: number, radians: number): void;
 	scaleLine(lineNo: number, scaleXY: number[]): void;
-	setLine(lineNo: number, transformation: mat3): void;
+	setAll(transformation: mat3 | Float32Array): void;
+	setLine(lineNo: number, transformation: mat3 | Float32Array): void;
 	translateLine(lineNo: number, moveXY: number[]): void;
 	transformVector(lineNo: number, vectorXY: number): {
 		x: number;
