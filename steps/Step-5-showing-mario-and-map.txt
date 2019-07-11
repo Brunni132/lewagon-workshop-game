@@ -1,0 +1,9 @@
+function *main() {
+	vdp.configBackdropColor('#59f');
+
+	while (true) {
+		vdp.drawBackgroundTilemap('level1');
+		vdp.drawObject(vdp.sprite('mario').tile(6), 0, 0);
+		yield;
+	}
+}

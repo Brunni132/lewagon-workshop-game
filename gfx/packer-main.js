@@ -12,6 +12,10 @@ config({ compact: true, debug: false }, () => {
 		tiledMap('level1', 'mario-1-1', { tileWidth: 16, tileHeight: 16, tilesetWidth: 16, tilesetHeight: 16 });
 	});
 
+	palette('bg1', () => {
+		tiledMap('bg1', 'bg-1-1', { tileWidth: 8, tileHeight: 8, tilesetWidth: 16, tilesetHeight: 16 });
+	});
+
 	palette('text', () => {
 		tileset('text', 'defaultFont.png', 8, 8, () => {
 			map('text', blank(Math.ceil(SCREEN_WIDTH / 8), Math.ceil(SCREEN_HEIGHT / 8)));

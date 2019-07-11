@@ -1,0 +1,7 @@
+function *main() {
+	vdp.configBackdropColor('#59f');
+
+	while (true) {
+		yield;
+	}
+}

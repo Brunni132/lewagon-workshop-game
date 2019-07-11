@@ -1,5 +1,5 @@
 import {startGame, vdp, color} from "../lib/vdp-lib";
-import {clamp, getMapBlock, setMapBlock} from './utils';
+import {clamp, getMapBlock, setMapBlock, TextLayer} from './utils';
 
 function *main() {
 	vdp.configBackdropColor('#59f');
