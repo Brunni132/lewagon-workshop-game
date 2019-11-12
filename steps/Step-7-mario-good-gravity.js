@@ -1,3 +1,6 @@
+import {startGame, vdp, color} from "../lib/vdp-lib";
+import {clamp, getMapBlock, setMapBlock, TextLayer} from './utils';
+
 function *main() {
 	const textLayer = new TextLayer();
 	const mario = {
@@ -17,10 +20,13 @@ function *main() {
 		vdp.drawBackgroundTilemap('level1');
 		vdp.drawObject(vdp.sprite('mario').tile(6), mario.left, mario.top);
 
-		mario.top += 1;
+		mario.verticalVelocity += 0.1;
+		mario.top += mario.verticalVelocity;
 
-		textLayer.drawText(0, 29, `x: ${mario.left.toFixed(2)}, y: ${mario.top.toFixed(2)}`);
+		textLayer.drawText(0, 29, `x: ${mario.left.toFixed(2)}, y: ${mario.top.toFixed(2)}, vy: ${mario.verticalVelocity.toFixed(2)} `);
 		textLayer.draw();
 		yield;
 	}
 }
+
+startGame('#glCanvas', vdp => main(vdp));

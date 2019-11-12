@@ -1,3 +1,6 @@
+import {startGame, vdp, color} from "../lib/vdp-lib";
+import {clamp, getMapBlock, setMapBlock, TextLayer} from './utils';
+
 function collidesAtPosition(left, top) {
 	const collidables = [38, 11, 12, 18, 19, 24, 25, 16, 13];
 	return collidables.includes(getMapBlock('level1', Math.floor(left / 16), Math.floor(top / 16)));
@@ -9,7 +12,7 @@ function *main() {
 		left: 0,
 		top: 0,
 		width: 16,
-		height: 32,
+		height: 16,
 		get right() { return this.left + this.width; },
 		get bottom() { return this.top + this.height; },
 		horizontalVelocity: 0,
@@ -37,16 +40,14 @@ function *main() {
 			this.left = Math.max(this.left, mario.left - 100);
 		},
 	};
-	let loop = 0;
 
 	vdp.configBackdropColor('#59f');
 
 	while (true) {
 		camera.centerAroundMario();
-		vdp.drawBackgroundTilemap('bg1', { scrollX: camera.left / 2, scrollY: camera.top });
-		vdp.drawBackgroundTilemap('level1', { scrollX: camera.left, scrollY: camera.top, winH: 224 });
+		vdp.drawBackgroundTilemap('level1', { scrollX: camera.left, scrollY: camera.top });
 		vdp.drawObject(mario.sprite, mario.left - camera.left, mario.top - camera.top, {
-			flipH: mario.facingLeft, width: mario.width, height: mario.height
+			flipH: mario.facingLeft
 		});
 
 		const colorTable = new vdp.LineColorArray(0, 0);
@@ -56,20 +57,6 @@ function *main() {
 		}
 		vdp.configColorSwap([colorTable]);
 
-		const shiningBlockColors = [
-			color.make('#f93'),
-			color.make('#f93'),
-			color.make('#c50'),
-			color.make('#810'),
-			color.make('#810'),
-			color.make('#c50')
-		];
-		const colorIndex = Math.floor(loop / 12) % shiningBlockColors.length;
-		const pal = vdp.readPalette('level1');
-		pal.array[7] = shiningBlockColors[colorIndex];
-		vdp.writePalette('level1', pal);
-
-		loop += 1;
 		mario.animation += 1;
 		mario.verticalVelocity += 0.1;
 
@@ -112,3 +99,5 @@ function *main() {
 		yield;
 	}
 }
+
+startGame('#glCanvas', vdp => main(vdp));

@@ -1,9 +1,13 @@
+import {startGame, vdp, color} from "../lib/vdp-lib";
+import {clamp, getMapBlock, setMapBlock, TextLayer} from './utils';
+
 function collidesAtPosition(left, top) {
 	const collidables = [38, 11, 12, 18, 19, 24, 25, 16, 13];
 	return collidables.includes(getMapBlock('level1', Math.floor(left / 16), Math.floor(top / 16)));
 }
 
 function *main() {
+	const textLayer = new TextLayer();
 	const input = vdp.input;
 	const mario = {
 		left: 0,
@@ -15,20 +19,6 @@ function *main() {
 		horizontalVelocity: 0,
 		verticalVelocity: 0,
 		facingLeft: false,
-		animation: 0,
-		get grounded() {
-			return collidesAtPosition(mario.left, mario.bottom + 2) || collidesAtPosition(mario.right, mario.bottom + 2);
-		},
-		get sprite() {
-			const sprite = vdp.sprite('mario');
-			if (!this.grounded) {
-				return sprite.tile(4); // jumping pose
-			}
-			if (this.horizontalVelocity === 0) {
-				return sprite.tile(6); // standing pose
-			}
-			return sprite.tile(Math.floor(this.animation * 0.1) % 3); // 0-2: walking
-		}
 	};
 	const camera = {
 		left: 0,
@@ -37,40 +27,16 @@ function *main() {
 			this.left = Math.max(this.left, mario.left - 100);
 		},
 	};
-	let loop = 0;
 
 	vdp.configBackdropColor('#59f');
 
 	while (true) {
 		camera.centerAroundMario();
-		vdp.drawBackgroundTilemap('bg1', { scrollX: camera.left / 2, scrollY: camera.top });
-		vdp.drawBackgroundTilemap('level1', { scrollX: camera.left, scrollY: camera.top, winH: 224 });
-		vdp.drawObject(mario.sprite, mario.left - camera.left, mario.top - camera.top, {
+		vdp.drawBackgroundTilemap('level1', { scrollX: camera.left, scrollY: camera.top });
+		vdp.drawObject(vdp.sprite('mario').tile(6), mario.left - camera.left, mario.top - camera.top, {
 			flipH: mario.facingLeft
 		});
 
-		const colorTable = new vdp.LineColorArray(0, 0);
-		const skyBlue = color.make('#59f'), white = color.make('#fff');
-		for (let i = 0; i < vdp.screenHeight; i++) {
-			colorTable.setLine(i, color.blend(skyBlue, white, i / vdp.screenHeight));
-		}
-		vdp.configColorSwap([colorTable]);
-
-		const shiningBlockColors = [
-			color.make('#f93'),
-			color.make('#f93'),
-			color.make('#c50'),
-			color.make('#810'),
-			color.make('#810'),
-			color.make('#c50')
-		];
-		const colorIndex = Math.floor(loop / 12) % shiningBlockColors.length;
-		const pal = vdp.readPalette('level1');
-		pal.array[7] = shiningBlockColors[colorIndex]; // try to change with 5
-		vdp.writePalette('level1', pal);
-
-		loop += 1;
-		mario.animation += 1;
 		mario.verticalVelocity += 0.1;
 
 		mario.top += mario.verticalVelocity;
@@ -93,8 +59,8 @@ function *main() {
 			mario.left -= 1;
 		}
 
-		if (input.hasToggledDown(input.Key.Up) && mario.grounded) {
-			mario.verticalVelocity = -3.8;
+		if (input.hasToggledDown(input.Key.Up)) {
+			mario.verticalVelocity = -3.5;
 		}
 
 		if (input.isDown(input.Key.Left)) {
@@ -109,6 +75,11 @@ function *main() {
 
 		// Mario cannot go left to the camera
 		mario.left = Math.max(mario.left, camera.left);
+
+		textLayer.drawText(0, 29, `x: ${mario.left.toFixed(2)}, y: ${mario.top.toFixed(2)}, vy: ${mario.verticalVelocity.toFixed(2)} `);
+		textLayer.draw();
 		yield;
 	}
 }
+
+startGame('#glCanvas', vdp => main(vdp));

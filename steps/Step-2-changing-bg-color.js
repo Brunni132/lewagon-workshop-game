@@ -1,3 +1,6 @@
+import {startGame, vdp, color} from "../lib/vdp-lib";
+import {clamp, getMapBlock, setMapBlock, TextLayer} from './utils';
+
 function *main() {
 	let loop = 0;
 
@@ -7,3 +10,5 @@ function *main() {
 		yield;
 	}
 }
+
+startGame('#glCanvas', vdp => main(vdp));
