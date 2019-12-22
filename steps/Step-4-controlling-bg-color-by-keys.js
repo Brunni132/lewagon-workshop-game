@@ -1,7 +1,7 @@
-import {startGame, vdp, color} from "../lib/vdp-lib";
+import {vdp, color} from "../lib/vdp-lib";
 import {clamp, getMapBlock, setMapBlock, TextLayer} from './utils';
 
-function *main() {
+export function *main() {
 	let red = 0.5;
 	const textLayer = new TextLayer();
 
@@ -19,5 +19,3 @@ function *main() {
 		yield;
 	}
 }
-
-startGame('#glCanvas', vdp => main(vdp));

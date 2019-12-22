@@ -1,4 +1,4 @@
-import {startGame, vdp, color} from "../lib/vdp-lib";
+import {vdp, color} from "../lib/vdp-lib";
 import {clamp, getMapBlock, setMapBlock, TextLayer} from './utils';
 
 function collidesAtPosition(left, top) {
@@ -6,7 +6,7 @@ function collidesAtPosition(left, top) {
 		=== 38;
 }
 
-function *main() {
+export function *main() {
 	const textLayer = new TextLayer();
 	const input = vdp.input;
 	const mario = {
@@ -43,5 +43,3 @@ function *main() {
 		yield;
 	}
 }
-
-startGame('#glCanvas', vdp => main(vdp));

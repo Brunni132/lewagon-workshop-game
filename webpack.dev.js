@@ -2,7 +2,7 @@ const path = require('path');
 const WatchFilesPlugin = require('webpack-watch-files-plugin').default;
 
 module.exports = {
-	entry: './src/game-main.js',
+	entry: './main.js',
 	devtool: 'inline-source-map',
 	devServer: {
 		open: true

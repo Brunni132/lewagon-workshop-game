@@ -3,7 +3,7 @@ const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
-	entry: './src/game-main.js',
+	entry: './main.js',
 	devtool: false,
 	resolve: {
 		extensions: [ '.js' ]
