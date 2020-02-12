@@ -1,32 +1,23 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
 	<meta charset="utf-8" />
 	<title>VDP-16</title>
 	<style type="text/css">
-        body {
-            background: #111;
-            padding: 0;
-            margin: 0;
-        }
-
-		#content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-		}
+    body {
+        background: #111;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
 
 		canvas {
-            border: 1px solid #ccc;
-
+      border: 1px solid #ccc;
 			image-rendering: optimizeSpeed;             /* Older versions of FF          */
 			image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
 			image-rendering: -webkit-optimize-contrast; /* Safari                        */
@@ -34,26 +25,48 @@
 			image-rendering: pixelated;                 /* Awesome future-browsers       */
 			-ms-interpolation-mode: nearest-neighbor;   /* IE                            */
 		}
+
+    #error-box {
+      display: none;
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: red;
+      background: rgba(0,0,0,0.7);
+      border-radius: 10px;
+      padding: 5px
+    }
+
+    .visible {
+      display: block !important;
+    }
 	</style>
 </head>
 
 <body>
-    <div id="content">
-        <canvas id="glCanvas" width="256" height="256" style="width: 512px; height: 512px;"></canvas>
+    <canvas id="glCanvas" width="256" height="256"></canvas>
+    <div id="error-box">An error occurred and your game has been interrupted.<br>
+      Please open the developer tools console in your browser to get more information.<br>
+      On Firefox, press Ctrl+Shift+I (Command+option+I on Mac), on Chrome Ctrl+Shift+J (Command+option+J on Mac).
+      <br><br>
+      <span id="error-detail"></span>
     </div>
+
     <script>
-			var canvas = document.querySelector('#glCanvas');
-			// Resize the canvas for the pixel ratio so that pixels are not stretched (for 100-200%)
-			var ratio = window.devicePixelRatio;
-			if (ratio < 2) {
-				canvas.style.width = `${256 / ratio * 2}px`;
-				canvas.style.height = `${256 / ratio * 2}px`;
-			} else {
-				ratio = Math.floor(ratio);
-				canvas.style.width = `${256 * ratio}px`;
-				canvas.style.height = `${256 * ratio}px`;
-			}
+        var canvas = document.querySelector('#glCanvas');
+
+        // Resize the canvas for the pixel ratio so that pixels are not stretched (for 100-200%)
+        var ratio = window.devicePixelRatio;
+        if (ratio < 2) {
+            canvas.style.width = `${256 / ratio * 2}px`;
+            canvas.style.height = `${256 / ratio * 2}px`;
+        } else {
+            ratio = Math.floor(ratio);
+            canvas.style.width = `${256 * ratio}px`;
+            canvas.style.height = `${256 * ratio}px`;
+        }
+        window['resourceDir'] = 'dist/';
     </script>
-    <script src="build/game.bundle.js"></script>
+    <script src="dist/game.bundle.js"></script>
 </body>
 </html>

@@ -1,0 +1,128 @@
+<div id="maps-body" class="hidden vertical take-all">
+    <div class="toolbar content-centered-vertically">
+        <button class="light-button save-button"><i class="fa fa-save"></i><span class="shortcut">Ctrl+S</span></button>
+        <% include ../components/image-export-component.ejs %>
+        <button class="light-button select-button" data-tooltip="Selection tool [Esc]|Click to select map files. Hold shift and drag to pan."><i class="fa fa-mouse-pointer"></i><span class="shortcut">S</span></button>
+        <button class="light-button rect-button" data-tooltip="Rectangle tool [R]|Click and drag to make rectangular selections."><i class="fa fa-object-group"></i><span class="shortcut">R</span></button>
+        <button class="light-button create-button" data-tooltip="Create map|Use the rectangle tool to select an area, and then click on this button."><i class="fa fa-plus"></i></button>
+        <button class="light-button move-button" data-tooltip="Select & move tool [R]|Click on any active item to move it. You can also move a rectangular selection (hold ctrl to add to existing selection)."><i class="fa fa-arrows"></i><span class="shortcut">R</span></button>
+        <button class="light-button place-button" data-tooltip="Place tool [P]|Click and place the object with the ID in the tile selector."><i class="fa fa-hand-point-down"></i><span class="shortcut">P</span></button>
+        <button class="light-button brush-button" data-tooltip="Paintbrush tool [P]|Click to paste the contents copied with the clone tool (or right-clicking while using this tool)."><i class="fa fa-brush"></i><span class="shortcut">P</span></button>
+        <button class="light-button cloner-button" data-tooltip="Clone tool [O]|Drag to create a rectangle that can be then pasted using the brush."><i class="fa fa-stamp"></i><span class="shortcut">O</span></button>
+        <% include ../components/image-import-component.ejs %>
+        <button class="light-button zoom-button" data-tooltip="Zoom tool|Press Z to zoom in, Y to zoom out, Shift+Z (or click this button) to reset zoom and F to center the view around the selected item."><i class="fa fa-search-plus"></i><span class="shortcut">Z</span></button>
+    </div>
+    <div class="body horizontal take-all">
+        <div class="main-box take-all">
+            <canvas class="map-editor absolute"></canvas>
+        </div>
+        <div class="detail-box vertical">
+            <div class="title content-centered-horizontally">DETAILS</div>
+            <div style="height: 15px"></div>
+            <div class="default-panel hidden">
+                <p>The map editor is mainly used to edit the structure of your levels. Maps can be used to provide graphic elements as well as gameplay elements structured as a grid, and objects on top of it (freeform objects which have a position and an icon as well as custom properties; it can be used to place an enemy to spawn when loading your level).</p>
+            </div>
+            <div class="map-detail-panel hidden">
+                <div class="position-box">
+                    <table>
+                        <tr>
+                            <td>Name</td><td><input class="map-name" type="text"></td>
+                        </tr>
+                        <tr>
+                            <td data-tooltip="The map is a grid in which each cell designates a tile index, inside what si called the tileset. Therefore a tileset is a sprite split in several tiles (see properties TW and TH in the sprite editor).">Tileset&nbsp;<i class="help fas fa-question-circle"></i></td><td><select class="map-til"></select></td>
+                        </tr>
+                        <tr>
+                            <td data-tooltip="Each map uses one of the palettes as a base (the palette offset field allows for selecting more palettes next to the base palette).">Palette&nbsp;<i class="help fas fa-question-circle"></i></td><td><select class="map-pal"></select></td>
+                        </tr>
+                        <tr>
+                            <td data-tooltip="There are two type of maps. One is a simple grid of indices of tiles from a tileset, and another is a list of objects with attributes (JSON), freely-placed on top of a normal map, typically used to spawn objects in the level. Each object has an ID, graphically represented using a tileset.">
+                                Type&nbsp;<i class="help fas fa-question-circle"></i>
+                            </td>
+                            <td>
+                                <select class="map-type">
+                                    <option value="object">object list</option>
+                                    <option value="map">tilemap</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>X</td><td><input class="map-x" type="number"></td><td>Y</td><td><input class="map-y" type="number"></td>
+                        </tr>
+                        <tr>
+                            <td data-tooltip="W and H (width and height) of the whole map. Each tile has the size of the tile defined in the tileset (sprite's TW/TH properties).">W&nbsp;<i class="help fas fa-question-circle"></i></td>
+                            <td><input class="map-w" type="number"></td><td>H</td><td><input class="map-h" type="number"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="height: 20px"></div>
+                <div class="elements-inline">
+                    <button class="light-button edit-map-button"><i class="fa fa-edit"></i><span class="text-around-icon">Edit map</span></button>
+                    <button class="light-button remove-map-button"><i class="fa fa-trash"></i><span class="text-around-icon">Remove map</span></button>
+                </div>
+            </div>
+            <div class="edition-panel hidden">
+                <div class="mb20">You are editing map <span class="pre edit-map-label"></span>. Click on the <span class="pre"><i class="fa fa-mouse-pointer"></i> Select</span> tool to go back.</div>
+                <div class="plane-list mb20">
+                    <div class="plane">
+                        <div class="name">Name</div>
+                        <button class="light-button visible-button"><i class="fa fa-eye"></i></button>
+                    </div>
+                    <div class="plane-add content-centered-horizontally content-centered-vertically">
+                        <i class="fa fa-plus"></i>&nbsp;ADD PLANE
+                    </div>
+                    <div class="plane-add-dialog dialog-box content-centered-vertically content-centered-horizontally hidden">
+                        <div class="contents">
+                            <div class="title">Adding a plane</div>
+                            <div class="text">
+                                <p>If you want to add more info to your level, without it having to be visible, you can add another plane. Typical uses are either a <span class="pre">tilemap plane</span> that contains collision info (same size and position as the graphics plane, except that it just contains blocks to indicate whether there is a collision or a special event on a given block) or an <span class="pre">object list plane</span>, which is a special type of plane allowing you to place objects freely over an existing plane, not following a grid pattern. The objects can be placed at a one-pixel precision, and they can have additional properties (for instance, if an object indicates where to spawn an enemy, properties can specifiy his direction or initial energy level). Object lists are ultimately saved as a JSON array, and can be used from the code by calling <span class="pre">vdp.readObjectList</span>.</p>
+                                <p>Note that you need to create those planes beforehand. If it&quot;s not the case already, go back to the tilemap list (select button or S key), select an area, click the + button and select the appropriate type.</p>
+                                <p>
+                                    PLANE TO ADD: <select class="map-list"></select>
+                                </p>
+                            </div>
+                            <div class="buttons content-centered-horizontally content-centered-vertically">
+                                <button class="light-button button-ok">Add</button>
+                                <button class="light-button button-cancel">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tile-selector">
+                    <table>
+                        <tr class="tile-no-row">
+                            <td class="tile-no-label">Tile number</td>
+                            <td><input class="tile-no" type="number" value="-1" min="0" max="8191" disabled><i class="help fas fa-question-circle" data-tooltip="Use keys 1-2 to quickly switch tile number, 3-4 for palette, 5-6 for planes."></i></td>
+                        </tr>
+                        <tr class="pal-offset-row">
+                            <td>Palette offset</td>
+                            <td><input class="tile-pal" type="number" value="0" min="0" max="7" disabled></td>
+                        </tr>
+                        <tr class="obj-props-row">
+                            <td>Object properties</td>
+                            <td><textarea class="obj-properties"></textarea></td>
+                            <td><button class="light-button no-margin"><i class="fa fa-check"></i></button></td>
+                        </tr>
+                    </table>
+                    <canvas></canvas>
+                </div>
+            </div>
+            <div class="take-all"></div>
+        </div>
+    </div>
+    <div class="map-import-dialog dialog-box content-centered-vertically content-centered-horizontally hidden">
+        <div class="contents">
+            <div class="title">Importing a tilemap</div>
+            <div class="text">
+                <p>This will import your PNG image as a tilemap usable as a background. The image will be broken down in tiles, quantized to match the palette, and written to a tileset.</p>
+                <p>For that, we need a tileset (in which the tiles will be put -- note that existing tiles may be reused by the new image, so you can have multiple backgrounds which share the same tiles as long as they are in the same tileset) which defines the tile size and the palette to use. If the palette has free colors and the image has colors not present in the palette, the import tool will add them for you.</p>
+                <p>Please create the tileset in the tilesets screen (empty if you need, by using the Rect tool, then click the + button on the toolbar).</p>
+                <p>If you want to replace the tiles in the tileset, delete the tiles (make them blank, for instance with the Rect tool) inside the tileset. Same with the palette.</p>
+                <p>Tileset: <select class="tileset"></select></p>
+            </div>
+            <div class="buttons content-centered-horizontally content-centered-vertically">
+                <button class="light-button button-ok">Import</button>
+                <button class="light-button button-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

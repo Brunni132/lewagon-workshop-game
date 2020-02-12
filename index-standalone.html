@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>VDP-16</title>
+    <style type="text/css">
+        body {
+            background: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        canvas {
+            border: 1px solid #ccc;
+            image-rendering: optimizeSpeed;             /* Older versions of FF          */
+            image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
+            image-rendering: -webkit-optimize-contrast; /* Safari                        */
+            image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
+            image-rendering: pixelated;                 /* Awesome future-browsers       */
+            -ms-interpolation-mode: nearest-neighbor;   /* IE                            */
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="glCanvas" width="256" height="256"></canvas>
+    <script type="text/javascript" src="lib/vdp-lib.js"></script>
+    <script>
+        var canvas = document.querySelector('#glCanvas');
+        var vdpLib = window['vdp-lib'];
+        vdpLib.startStandalone({ resourceDir: './game', scriptFile: './src/game-main.js' });
+
+        // Resize the canvas for the pixel ratio so that pixels are not stretched (for 100-200%)
+        var ratio = window.devicePixelRatio;
+        if (ratio < 2) {
+            canvas.style.width = `${256 / ratio * 2}px`;
+            canvas.style.height = `${256 / ratio * 2}px`;
+        } else {
+            ratio = Math.floor(ratio);
+            canvas.style.width = `${256 * ratio}px`;
+            canvas.style.height = `${256 * ratio}px`;
+        }
+    </script>
+</body>
+</html>

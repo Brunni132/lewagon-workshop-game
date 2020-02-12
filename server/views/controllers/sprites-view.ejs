@@ -1,0 +1,86 @@
+<div id="sprites-body" class="hidden vertical take-all">
+    <div class="toolbar content-centered-vertically">
+        <button class="light-button save-button"><i class="fa fa-save"></i><span class="shortcut">Ctrl+S</span></button>
+        <% include ../components/image-export-component.ejs %>
+        <button class="light-button select-button" data-tooltip="Selection tool [Esc]|Click to select items. Hold shift and drag to pan."><i class="fa fa-mouse-pointer"></i><span class="shortcut">S</span></button>
+        <button class="light-button rect-button" data-tooltip="Rectangle tool [R]|Click and drag to make rectangular selections."><i class="fa fa-object-group"></i><span class="shortcut">R</span></button>
+        <button class="light-button create-button" data-tooltip="Create sprite|Use the rectangle tool to select an area, and then click on this button."><i class="fa fa-plus"></i></button>
+        <button class="light-button pen-button" data-tooltip="Pen tool [P]|Click to draw pixels (right click will grab color from the current pixel)."><i class="fa fa-pencil"></i><span class="shortcut">P</span></button>
+        <button class="light-button eyedropper-button" data-tooltip="Eyedropper tool [O]|Click to take the color in the canvas."><i class="fa fa-eyedropper"></i><span class="shortcut">O</span></button>
+        <button class="light-button bucket-button" data-tooltip="Bucket fill [B]|Fills all similar colors that are connected (only available in edit mode)."><i class="fa fa-fill"></i><span class="shortcut">B</span></button>
+        <% include ../components/image-import-component.ejs %>
+        <button class="light-button zoom-button" data-tooltip="Zoom tool|Press Z to zoom in, Y to zoom out, Shift+Z (or click this button) to reset zoom and F to center the view around the selected item."><i class="fa fa-search-plus"></i><span class="shortcut">Z</span></button>
+    </div>
+    <div class="body horizontal take-all">
+        <div class="main-box take-all">
+            <canvas class="sprite-editor absolute"></canvas>
+        </div>
+        <div class="detail-box vertical">
+            <div class="title content-centered-horizontally">DETAILS</div>
+            <div style="height: 15px"></div>
+            <div class="horizontal content-centered-vertically">
+                <span>Active palette</span>&nbsp;
+                <select class="active-palette"></select>
+                <button class="light-button prev-palette" data-tooltip="Previous palette [1 key]">&lt;</button>
+                <button class="light-button next-palette" data-tooltip="Next palette [2 key]">&gt;</button>
+            </div>
+            <div style="height: 15px"></div>
+            <% include ../components/palette-color-selector.ejs %>
+            <div class="default-panel hidden">
+                <p>Here you can work with your sprites. Sprites just store pixels between 0 and 15, 0 being transparent and values 1-15 referencing a color in the palette. Therefore the actual colors of the sprite depend on the palette with which they are associated.</p>
+                <p>To create sprites, either use the import button, or draw in the canvas and then use the rect tool [R key] to draw a rectangle around it, then click the + button to create a new sprite.</p>
+                <p>Tip: to move a sprite, select it (use the select tool [S key]) and then cut and paste it (Ctrl+X, then Ctrl+V). You can then move it exactly where you want.</p>
+            </div>
+            <div class="sprite-detail-panel hidden">
+                <div class="position-box">
+                    <table>
+                        <tr>
+                            <td>Name</td><td><input class="sprite-name" type="text"></td>
+                        </tr>
+                        <tr>
+                            <td data-tooltip="Each sprite uses one of the palettes, allowing for 15 colors + transparent. This palette will be selected by default when you edit it.">Palette&nbsp;<i class="help fas fa-question-circle"></i></td><td><select class="sprite-pal"></select>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>X</td><td><input class="sprite-x" type="number"></td><td>Y</td><td><input class="sprite-y" type="number"></td>
+                        </tr>
+                        <tr>
+                            <td data-tooltip="W and H (width and height) of the whole sprite/tileset. Should be a multiple of TW/TH (tile size, see below).">W&nbsp;<i class="help fas fa-question-circle"></i></td>
+                            <td><input class="sprite-w" type="number"></td><td>H</td><td><input class="sprite-h" type="number"></td>
+                        </tr>
+                        <tr>
+                            <td data-tooltip="The tile width and height are used to subdivide your sprites into frames which can be displayed independently, but also in tiles for maps. Each tile (or sprite frame) has the same size, and they are ordered from left to right then top to bottom. Sprites with non-zero TW/TH are called tilesets.">
+                                TW&nbsp;<i class="help fas fa-question-circle"></i>
+                            </td>
+                            <td><input class="sprite-tw" type="number"></td>
+                            <td>TH</td><td><input class="sprite-th" type="number"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="height: 20px"></div>
+                <div class="elements-inline">
+                    <button class="light-button edit-sprite-button" data-tooltip="You can also double-click on a sprite to edit it."><i class="fa fa-edit"></i><span class="text-around-icon">Edit sprite</span></button>
+                    <button class="light-button remove-sprite-button"><i class="fa fa-trash"></i><span class="text-around-icon">Remove sprite</span></button>
+                </div>
+                <p>Use Cut & Paste to move contents around (Ctrl+X, then Ctrl+V).</p>
+            </div>
+            <div class="edition-panel hidden">
+                You are editing sprite <span class="pre edit-sprite-label"></span>. Click on the <span class="pre"><i class="fa fa-mouse-pointer"></i> Select</span> tool to go back.
+            </div>
+            <div class="take-all"></div>
+        </div>
+    </div>
+
+    <div class="sprite-import-dialog dialog-box content-centered-vertically content-centered-horizontally hidden">
+        <div class="contents">
+            <div class="title">Importing a sprite</div>
+            <div class="text">
+                <p>If the sprite needs new colors, we can import them for you in the palette. Please ensure that there are enough transparent colors in the palette (use the eraser to mark them free).</p>
+                <p>Colors will be imported in palette named <span class="palette-name pre"></span>.</p>
+            </div>
+            <div class="buttons content-centered-horizontally content-centered-vertically">
+                <button class="light-button button-ok">Import</button>
+                <button class="light-button button-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

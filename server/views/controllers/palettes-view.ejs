@@ -1,0 +1,61 @@
+<div id="palettes-body" class="hidden vertical take-all">
+    <div class="toolbar content-centered-vertically">
+        <button class="light-button save-button"><i class="fa fa-save"></i><span class="shortcut">Ctrl+S</span></button>
+        <% include ../components/image-export-component.ejs %>
+        <button class="light-button select-button" data-tooltip="Selection tool [Esc]|Click to select items. Hold shift and drag to pan."><i class="fa fa-mouse-pointer"></i><span class="shortcut">S</span></button>
+        <button class="light-button rect-button" data-tooltip="Rectangle tool [R]|Click and drag to make rectangular selections."><i class="fa fa-object-group"></i><span class="shortcut">R</span></button>
+        <button class="light-button pen-button" data-tooltip="Pen tool [P]|Click to draw pixels (right click will grab color from the current pixel)."><i class="fa fa-pencil"></i><span class="shortcut">P</span></button>
+        <button class="light-button eyedropper-button" data-tooltip="Eyedropper tool [O]|Click to take the color in the canvas."><i class="fa fa-eyedropper"></i><span class="shortcut">O</span></button>
+        <button class="light-button eraser-button" data-tooltip="Eraser tool [E]|Click to erase pixels (erased colors can be used for imported sprites / tilemaps)."><i class="fa fa-eraser"></i><span class="shortcut">E</span></button>
+        <% include ../components/image-import-component.ejs %>
+        <button class="light-button zoom-button" data-tooltip="Zoom tool|Press Z to zoom in, Y to zoom out, Shift+Z (or click this button) to reset zoom."><i class="fa fa-search-plus"></i><span class="shortcut">Z</span></button>
+    </div>
+    <div class="body horizontal take-all">
+        <div class="main-box take-all">
+            <canvas class="palette-editor absolute"></canvas>
+        </div>
+        <div class="detail-box vertical">
+            <div class="title content-centered-horizontally">DETAILS</div>
+            <div style="height: 15px"></div>
+            <div class="default-panel hidden">
+                <p>You have 8 palettes for the entire game, so try to share and reuse them.</p>
+                <p>Note that the first color of each palette must remain transparent (it is never rendered as color 0 = transparency). The top-left color 0 is used for the backdrop.</p>
+                <p>You can make colors transparent by erasing them. This way, they can be reused when importing sprites and tilemaps, in case the imported image contains colors not already present on the palette.</p>
+            </div>
+            <div class="palette-detail-panel hidden">
+                <div>You have selected a palette, which you can edit below. Changes are saved immediately.</div>
+                <div style="height: 20px"></div>
+                <div class="position-box">
+                    <table>
+                        <tr>
+                            <td>Name</td><td><input class="palette-name" type="text"></td>
+                        </tr>
+                        <tr>
+                            <td>X</td><td><input class="palette-x" type="number" disabled></td>
+                        </tr>
+                        <tr>
+                            <td>Y (row)</td><td><input class="palette-y" type="number" min="0" max="15"></td>
+                        </tr>
+                        <tr>
+                            <td>W</td><td><input class="palette-w" type="number" disabled></td>
+                        </tr>
+                        <tr>
+                            <td data-tooltip="H (height) defines the number of rows that the palette contains. Tilemaps can, with the 'palette offset' field, reference more than one set of 16 colors. In this case, you can make the palette bigger to allow automatic image conversion tools to attribute the right palette to each tile.">H&nbsp;<i class="help fas fa-question-circle"></i></td><td><input class="palette-h" type="number" min="1" max="8"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="height: 20px"></div>
+                <div class="elements-inline">
+                    <button class="light-button edit-palette-button"><i class="fa fa-edit"></i><span class="text-around-icon">Edit palette</span></button>
+                    <button class="light-button remove-palette-button"><i class="fa fa-trash"></i><span class="text-around-icon">Remove palette</span></button>
+                </div>
+            </div>
+            <div class="edition-panel hidden">
+                You are editing palette <span class="pre edit-palette-label"></span>. Click on the <span class="pre"><i class="fa fa-mouse-pointer"></i> Select</span> tool to go back.
+                <div style="height: 20px"></div>
+                <% include ../components/color-selector-component.ejs %>
+            </div>
+            <div class="take-all"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,355 @@
+*
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
+
+body
+  padding: 0
+  margin: 0
+  position: absolute
+  top: 0
+  right: 0
+  left: 0
+  bottom: 0
+  background: #d0d0d0
+
+button
+  background: none
+  padding: 0
+  margin: 0
+  border: 0
+  text-transform: uppercase
+  &:focus
+    outline: none
+
+canvas
+  image-rendering: optimizeSpeed
+  image-rendering: -moz-crisp-edges
+  image-rendering: -webkit-optimize-contrast
+  image-rendering: -o-crisp-edges
+  image-rendering: pixelated
+  -ms-interpolation-mode: nearest-neighbor
+
+a
+  text-decoration: underline
+  color: #08f
+
+.absolute
+  position: absolute
+
+.horizontal
+  display: flex
+  flex-direction: row
+
+.vertical
+  display: flex
+  flex-direction: column
+
+.content-centered-horizontally
+  display: flex
+  justify-content: center
+
+.content-centered-vertically
+  display: flex
+  align-items: center
+
+.take-all
+  flex-grow: 1
+
+.light-button
+  padding: 4px 10px
+  margin: 0 0 0 5px
+  display: flex
+  align-items: center
+  justify-content: center
+  border: rgba(0, 0, 0, 0.4) 1px solid
+  background: rgba(255, 255, 255, 0.5)
+  cursor: pointer
+
+  &.active
+    background-image: repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(0,0,0,.25) 2px, rgba(0,0,0,.25) 4px)
+
+  &.active:hover
+    background-image: repeating-linear-gradient(-45deg, #c0f2ff, #c0f2ff 2px, #a0c2cf 2px, #a0c2cf 4px)
+
+  &:active:active
+    background: rgba(0, 0, 0, 0.4)
+
+  &:hover
+    background: #c0f2ff
+
+  &:disabled
+    background: none
+
+  &:active
+    background: rgba(0, 0, 0, 0.4)
+
+.hidden
+  display: none
+
+.no-margin
+  margin: 0 !important
+
+.no-margin-padding
+  margin: 0 !important
+  padding: 0 !important
+
+.mb20
+  margin-bottom: 20px
+
+.elements-inline
+  *
+    display: inline-block
+
+.pre
+  padding: 2px
+  border: #888 dashed 1px
+  border-radius: 6px
+  color: #c08
+  font-family: "Source Code Pro", Monaco, monospace
+  font-size: 90%
+
+#tooltip
+  position: fixed
+  backdrop-filter: saturate(200%) blur(10px)
+  background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.6))
+  // backdrop-filter: invert(100%) brightness(50%) invert(100%) brightness(120%) saturate(200%) blur(10px)
+  // background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0))
+  border: #444 1px solid
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.5)
+  max-width: 300px
+  padding: 5px
+  z-index: 999
+
+  .title
+    font-weight: bold
+    margin-bottom: 5px
+    font-size: 12px
+
+  .contents
+    //text-align: justify
+    font-size: 12px
+
+.dialog-box
+  z-index: 999
+  position: fixed
+  left: 0
+  top: 0
+  right: 0
+  bottom: 0
+  background: rgba(0,0,0,0.8)
+
+  .contents
+    margin: 10px
+    max-width: 600px
+    padding: 20px
+    background: linear-gradient(to bottom, #fff, #ddd)
+    border-radius: 10px
+
+  .title
+    font-weight: bold
+    text-transform: uppercase
+    margin-bottom: 15px
+
+  .text
+    margin-bottom: 15px
+
+// --------------------
+.top-menu
+  width: 100%
+  background: linear-gradient(#e0e0e0, #c0c0c0)
+
+  .selection-rectangle, .active-selection-rectangle
+    position: absolute
+    top: 17px
+    left: 0
+    width: 100px
+    height: 0
+
+  .selection-rectangle
+    background: linear-gradient(#c0c0c0, #a0a0a0)
+    transition: all 0.2s ease-out
+    z-index: 1
+
+  .active-selection-rectangle
+    background: linear-gradient(#00e7ff, #00b7ff)
+    z-index: 0
+
+  .item
+    padding: 20px 30px
+    height: 56px
+    cursor: pointer
+    margin: 0
+    z-index: 2
+
+    //&:focus
+      color: #666
+
+#settings-button
+  margin-left: auto
+
+.toolbar
+  background: linear-gradient(#e0e0e0, #c0c0c0)
+  height: 35px
+
+button
+  i.fa
+    font-size: 19px
+
+  .text-around-icon
+    font-size: 12px
+    margin-left: 6px
+
+  .shortcut
+    text-transform: none
+    font-size: 10px
+    font-weight: bold
+    margin-left: 6px
+
+.detail-box
+  width: 30%
+  min-width: 300px
+
+  .title
+    font-weight: bold
+
+  label
+    margin-right: 6px
+
+  .position-box
+    div
+      padding: 5px
+
+    input, select
+      display: inline-block
+      width: 100px
+
+    label
+      display: inline-block
+      width: 10px
+
+#code-body
+  #code-box
+    font-family: "Source Code Pro", Monaco, monospace
+    width: calc(100% - 20px)
+    height: calc(100% - 20px)
+    border: 0
+    padding: 10px
+    outline: none
+    resize: none
+    background: #eeeeee
+
+.status-bar
+  height: 28px
+  background: linear-gradient(#e0e0e0, #c0c0c0)
+
+
+.tile-selector
+  height: 320px
+  canvas
+    width: 100%
+    height: 100%
+
+.plane-list
+  border: #888 1px solid
+  border-radius: 10px
+  width: 280px
+  overflow: hidden
+
+  .plane, .plane-add
+    position: relative
+    height: 40px
+
+    &:not(:first-child):before
+      content: ''
+      position: absolute
+      top: 0
+      right: 0
+      left: 0
+      height: 1px
+      margin: -1px
+      background: linear-gradient(to right, transparent, #aaa 20%, #aaa 80%, transparent 100%)
+
+    .name
+      position: absolute
+      top: 12px
+      left: 50px
+
+    .visible-button
+      position: absolute
+      top: 5px
+      left: 5px
+      width: 30px
+      height: 30px
+
+    .affected-button
+      position: absolute
+      top: 5px
+      left: 40px
+      width: 30px
+      height: 30px
+
+    .add-button
+      position: absolute
+      top: 5px
+      left: calc(50% - 60px)
+      width: 120px
+      height: 30px
+
+  .plane-add
+    height: 30px
+
+  .plane.active
+    .name
+      font-weight: bold
+
+  .plane.hover, .plane-add:active
+    background: #888
+
+.palette-color-selector
+  padding-left: 2px
+  margin-bottom: 15px
+
+  .first
+    background: repeating-linear-gradient(-45deg, transparent, transparent 2px, #888 3px, transparent 4px), repeating-linear-gradient(45deg, transparent, transparent 2px, #888 3px, transparent 4px)
+
+  .color-square
+    width: 24px
+    height: 24px
+    margin: 1px
+    display: inline-block
+    border: none
+
+    &.active
+      margin: 0
+      border: #fff 4px solid
+      width: 18px
+      height: 18px
+      box-shadow: 0 0 4px #000
+
+.color-selector-component
+  .containing-color
+    width: 100%
+    padding: 0 20px 0 10px
+
+  input[type="range"]
+    -webkit-appearance: none
+    appearance: none
+    width: 100%
+    height: 20px
+    outline: none
+
+    &.red
+      background: linear-gradient(90deg, #000, #f00)
+    &.green
+      background: linear-gradient(90deg, #000, #0f0)
+    &.blue
+      background: linear-gradient(90deg, #000, #00f)
+
+  input[type="text"]
+    width: 100px
+    font-family: "Source Code Pro", Monaco, monospace
+
+  .color-preview
+    display: inline-block
+    width: 32px
+    height: 24px
+    border: #fff 1px solid

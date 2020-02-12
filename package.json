@@ -1,11 +1,30 @@
 {
-  "name": "lewagon-test-game",
+  "name": "vdp16-contained",
   "version": "1.0.0",
   "description": "TODO",
-  "main": "index.js",
+  "main": "server/server-main-standalone.js",
+  "bin": "server/server-main-standalone.js",
+  "pkg": {
+    "assets": [
+      "server/public/**/*",
+      "server/stylesheets/**/*",
+      "server/views/**/*"
+    ]
+  },
   "dependencies": {
-    "pngjs": "^3.3.3",
-    "xml2js": "^0.4.19"
+    "body-parser": "^1.19.0",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "file-saver": "^2.0.2",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "node-sass-middleware": "0.11.0",
+    "opn": "^6.0.0",
+    "pkg": "^4.4.2",
+    "pngjs": "^3.4.0",
+    "webpack-hot-middleware": "^2.25.0"
   },
   "devDependencies": {
     "@types/gl-matrix": "^2.4.4",
@@ -17,10 +36,15 @@
     "webpack-watch-files-plugin": "^1.0.3"
   },
   "scripts": {
-    "build": "webpack --config webpack.prod.js",
-    "dev": "concurrently --kill-others \"npm run pack-gfx\" \"npm run debug-code-server\"",
-    "debug-code-server": "webpack-dev-server --config webpack.dev.js",
-    "pack-gfx": "node tools/gfxConverter/executable.js --no-server"
+    "game-build": "webpack --config webpack.game.prod.js",
+    "game-dev": "webpack-dev-server --config webpack.game.dev.js",
+    "distribute": "mkdir -p ../vdp16-dist/lib && mv vdp16-contained* ../vdp16-dist && cp main.js ../vdp16-dist/ && cp index.html ../vdp16-dist/ && cp -r dist ../vdp16-dist/ && cp -r src ../vdp16-dist && cp lib/vdp-lib.js ../vdp16-dist/lib/ && cp lib/vdp-lib.d.ts ../vdp16-dist/lib/",
+    "editor": "node server/server-main.js",
+    "editor-open": "node server/server-main.js --open",
+    "editor-build-exe-win32": "npm run editor-build-exe-resources && pkg -t node8-win-x86 . && npm run distribute",
+    "editor-build-exe-mac": "npm run editor-build-exe-resources && pkg -t node8-macos-x64 . && npm run distribute",
+    "editor-build-exe-linux": "npm run editor-build-exe-resources && pkg -t node8-linux-x86 . && npm run distribute",
+    "editor-build-exe-resources": "node-sass server/stylesheets/style.sass server/public/stylesheets/style.css && webpack --config server/webpack.editorMain.prod.js"
   },
   "author": "",
   "license": "ISC"

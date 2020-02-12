@@ -1,7 +1,7 @@
-import {startGame, vdp, color} from "../lib/vdp-lib";
+import {vdp, input, color, vec2, mat3} from "../lib/vdp-lib";
 import {clamp, getMapBlock, setMapBlock, TextLayer} from './utils';
 
-function *main() {
+export function *main() {
 	const textLayer = new TextLayer();
 	const mario = {
 		left: 0,
@@ -27,5 +27,3 @@ function *main() {
 		yield;
 	}
 }
-
-startGame('#glCanvas', vdp => main(vdp));

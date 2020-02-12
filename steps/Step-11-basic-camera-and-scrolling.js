@@ -1,4 +1,4 @@
-import {startGame, vdp, color} from "../lib/vdp-lib";
+import {vdp, input, color, vec2, mat3} from "../lib/vdp-lib";
 import {clamp, getMapBlock, setMapBlock, TextLayer} from './utils';
 
 function collidesAtPosition(left, top) {
@@ -63,5 +63,3 @@ function *main() {
 		yield;
 	}
 }
-
-startGame('#glCanvas', vdp => main(vdp));

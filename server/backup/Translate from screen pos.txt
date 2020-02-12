@@ -1,0 +1,2 @@
+    const translateNecessary = neg(this.posOnScreen([x, y]));
+    mat3.mul(this.transform, mat3.fromTranslation(mat3.create(), translateNecessary), this.transform);

@@ -1,0 +1,19 @@
+<div class="settings-dialog dialog-box content-centered-vertically content-centered-horizontally hidden">
+    <div class="contents">
+        <div class="title">SETTINGS</div>
+        <div class="text">
+            <p><input type="checkbox" id="setting-use-clipboard"><label for="setting-use-clipboard">Use clipboard</label></p>
+            <p><input type="checkbox" id="setting-use-pink"><label for="setting-use-pink">Use magenta (rgb 255, 0, 254) as transparent color in clipboard images / imported / exported PNG files</label></p>
+            <p>
+                If you enable clipboard support, your selection is exported to the clipboard when using Ctrl+C, and the import button takes the image from the clipboard (equivalent of Ctrl+V) if there is one, or opens the import dialog otherwise.
+            </p>
+            <p>
+                As of writing, clipboard support is only OK in Chrome, and on macOS, the images copied will have the screen profile attached (which you don't want to, and will need to remove), so it's recommended to use it only on Windows with Chrome. Also, some versions of Chrome are not able to copy transparency, so you may want to enable the pink color for transparency instead. Thanks to that, you can use simple tools such as MS Paint.
+            </p>
+        </div>
+        <div class="buttons content-centered-horizontally content-centered-vertically">
+            <button class="light-button button-ok">Confirm and apply</button>
+            <button class="light-button button-cancel">Abandon and close</button>
+        </div>
+    </div>
+</div>
