@@ -8,9 +8,9 @@ export function *main() {
 	while (true) {
 		vdp.configBackdropColor(color.makeFromFloat(red, 0, 0));
 
-		if (vdp.input.isDown(vdp.input.Key.Left)) {
+		if (input.isDown(input.Key.Left)) {
 			red -= 0.01;
-		} else if (vdp.input.isDown(vdp.input.Key.Right)) {
+		} else if (input.isDown(input.Key.Right)) {
 			red += 0.01;
 		}
 

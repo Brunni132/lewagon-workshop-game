@@ -7,7 +7,6 @@ function collidesAtPosition(left, top) {
 }
 
 export function *main() {
-	const input = vdp.input;
 	const mario = {
 		left: 0,
 		top: 0,

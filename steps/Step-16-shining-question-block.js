@@ -8,7 +8,6 @@ function collidesAtPosition(left, top) {
 
 export function *main() {
 	const textLayer = new TextLayer();
-	const input = vdp.input;
 	const mario = {
 		left: 0,
 		top: 0,
