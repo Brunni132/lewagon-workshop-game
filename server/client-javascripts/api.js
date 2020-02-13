@@ -267,7 +267,8 @@ export function drawTile32(canvasImageData, xDest, yDest, palette, tileset, tile
 	if (!supportTransparency) {
     for (let j = 0; j < tileset.th; j++)
       for (let i = 0; i < tileset.tw; i++) {
-        canvasImageData.setPixel(xDest + i, yDest + j, palette[paletteOffset + spriteBitmap.getPixel(x + i, y + j)]);
+				const pix = spriteBitmap.getPixel(x + i, y + j);
+        canvasImageData.setPixel(xDest + i, yDest + j, pix > 0 ? palette[paletteOffset + pix] : 0);
       }
   } else {
     for (let j = 0; j < tileset.th; j++)

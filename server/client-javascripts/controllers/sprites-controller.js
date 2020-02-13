@@ -106,7 +106,7 @@ export class SpritesController extends ImageEditorController {
     for (let y = rect.y0; y < rect.y1; y++)
       for (let x = rect.x0; x < rect.x1; x++, i++) {
         pixels[i] = spriteBitmap.getPixel(x, y);
-        pixels32[i] = this.currentPaletteArray[pixels[i]];
+        pixels32[i] = pixels[i] > 0 ? this.currentPaletteArray[pixels[i]] : 0;
       }
     copyToClipboard('sprite', indicator, rect.width, rect.height, pixels, { width: rect.width, height: rect.height, pixels: pixels32, isExport });
     return {indicator, rect};
