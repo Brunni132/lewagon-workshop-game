@@ -12,28 +12,28 @@
     ]
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "ejs": "~2.6.1",
-    "express": "~4.16.1",
-    "file-saver": "^2.0.2",
-    "http-errors": "~1.6.3",
-    "morgan": "~1.9.1",
-    "node-sass-middleware": "0.11.0",
-    "opn": "^6.0.0",
-    "pkg": "^4.4.2",
-    "pngjs": "^3.4.0",
-    "webpack-hot-middleware": "^2.25.0"
+    "body-parser": "^1.20.0",
+    "cookie-parser": "~1.4.6",
+    "debug": "~4.3.4",
+    "ejs": "~3.1.6",
+    "express": "~4.17.3",
+    "file-saver": "^2.0.5",
+    "http-errors": "~2.0.0",
+    "morgan": "~1.10.0",
+    "node-sass-middleware": "1.0.1",
+    "open": "^8.4.0",
+    "pkg": "^5.5.2",
+    "pngjs": "^6.0.0",
+    "webpack-hot-middleware": "^2.25.1"
   },
   "devDependencies": {
-    "@types/gl-matrix": "^2.4.4",
-    "concurrently": "^4.1.1",
-    "gl-matrix": "^3.0.0",
-    "webpack": "^4.12.0",
-    "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.4",
-    "webpack-watch-files-plugin": "^1.0.3"
+    "@types/gl-matrix": "^2.4.5",
+    "concurrently": "^7.1.0",
+    "gl-matrix": "^3.4.3",
+    "webpack": "^5.71.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4",
+    "webpack-watch-files-plugin": "^1.2.1"
   },
   "scripts": {
     "game-build": "webpack --config webpack.game.prod.js",

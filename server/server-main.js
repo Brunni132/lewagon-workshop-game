@@ -106,6 +106,6 @@ configureEditor();
 
 app.listen(port, () => {
   if (openUrls) {
-    require('opn')('http://localhost:3000/editor');
+    require('open')('http://localhost:3000/editor');
   }
 });
