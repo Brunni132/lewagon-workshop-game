@@ -50,3 +50,8 @@ scoop install nvm
 nvm install 8
 nvm use 8.16.2
 ```
+
+# For more info
+This is part of a project called vdp16. To see what it can do: https://brunni132.github.io/vdp16-samples/
+
+Contact me for more info, f [underscore] bron [at] hotmail [dot] com.
