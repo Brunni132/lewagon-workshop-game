@@ -1,13 +1,13 @@
 <div id="palettes-body" class="hidden vertical take-all">
     <div class="toolbar content-centered-vertically">
         <button class="light-button save-button"><i class="fa fa-save"></i><span class="shortcut">Ctrl+S</span></button>
-        <% include ../components/image-export-component.ejs %>
+        <%- include('../components/image-export-component.ejs') %>
         <button class="light-button select-button" data-tooltip="Selection tool [Esc]|Click to select items. Hold shift and drag to pan."><i class="fa fa-mouse-pointer"></i><span class="shortcut">S</span></button>
         <button class="light-button rect-button" data-tooltip="Rectangle tool [R]|Click and drag to make rectangular selections."><i class="fa fa-object-group"></i><span class="shortcut">R</span></button>
         <button class="light-button pen-button" data-tooltip="Pen tool [P]|Click to draw pixels (right click will grab color from the current pixel)."><i class="fa fa-pencil"></i><span class="shortcut">P</span></button>
         <button class="light-button eyedropper-button" data-tooltip="Eyedropper tool [O]|Click to take the color in the canvas."><i class="fa fa-eyedropper"></i><span class="shortcut">O</span></button>
         <button class="light-button eraser-button" data-tooltip="Eraser tool [E]|Click to erase pixels (erased colors can be used for imported sprites / tilemaps)."><i class="fa fa-eraser"></i><span class="shortcut">E</span></button>
-        <% include ../components/image-import-component.ejs %>
+        <%- include('../components/image-import-component.ejs') %>
         <button class="light-button zoom-button" data-tooltip="Zoom tool|Press Z to zoom in, Y to zoom out, Shift+Z (or click this button) to reset zoom."><i class="fa fa-search-plus"></i><span class="shortcut">Z</span></button>
     </div>
     <div class="body horizontal take-all">
@@ -53,7 +53,7 @@
             <div class="edition-panel hidden">
                 You are editing palette <span class="pre edit-palette-label"></span>. Click on the <span class="pre"><i class="fa fa-mouse-pointer"></i> Select</span> tool to go back.
                 <div style="height: 20px"></div>
-                <% include ../components/color-selector-component.ejs %>
+                <%- include('../components/color-selector-component') %>
             </div>
             <div class="take-all"></div>
         </div>

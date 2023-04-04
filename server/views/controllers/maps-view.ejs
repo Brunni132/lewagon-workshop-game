@@ -1,7 +1,7 @@
 <div id="maps-body" class="hidden vertical take-all">
     <div class="toolbar content-centered-vertically">
         <button class="light-button save-button"><i class="fa fa-save"></i><span class="shortcut">Ctrl+S</span></button>
-        <% include ../components/image-export-component.ejs %>
+        <%- include('../components/image-export-component') %>
         <button class="light-button select-button" data-tooltip="Selection tool [Esc]|Click to select map files. Hold shift and drag to pan."><i class="fa fa-mouse-pointer"></i><span class="shortcut">S</span></button>
         <button class="light-button rect-button" data-tooltip="Rectangle tool [R]|Click and drag to make rectangular selections."><i class="fa fa-object-group"></i><span class="shortcut">R</span></button>
         <button class="light-button create-button" data-tooltip="Create map|Use the rectangle tool to select an area, and then click on this button."><i class="fa fa-plus"></i></button>
@@ -9,7 +9,7 @@
         <button class="light-button place-button" data-tooltip="Place tool [P]|Click and place the object with the ID in the tile selector."><i class="fa fa-hand-point-down"></i><span class="shortcut">P</span></button>
         <button class="light-button brush-button" data-tooltip="Paintbrush tool [P]|Click to paste the contents copied with the clone tool (or right-clicking while using this tool)."><i class="fa fa-brush"></i><span class="shortcut">P</span></button>
         <button class="light-button cloner-button" data-tooltip="Clone tool [O]|Drag to create a rectangle that can be then pasted using the brush."><i class="fa fa-stamp"></i><span class="shortcut">O</span></button>
-        <% include ../components/image-import-component.ejs %>
+        <%- include('../components/image-import-component') %>
         <button class="light-button zoom-button" data-tooltip="Zoom tool|Press Z to zoom in, Y to zoom out, Shift+Z (or click this button) to reset zoom and F to center the view around the selected item."><i class="fa fa-search-plus"></i><span class="shortcut">Z</span></button>
     </div>
     <div class="body horizontal take-all">

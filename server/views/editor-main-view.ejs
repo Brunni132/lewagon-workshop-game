@@ -18,15 +18,15 @@
     <button id="settings-button" class="item"><i class="fa fa-cog"></i></button>
 </div>
 
-<%- include controllers/code-view.ejs %>
-<%- include controllers/palettes-view.ejs %>
-<%- include controllers/sprites-view.ejs %>
-<%- include controllers/maps-view.ejs %>
+<%- include('controllers/code-view') %>
+<%- include('controllers/palettes-view') %>
+<%- include('controllers/sprites-view') %>
+<%- include('controllers/maps-view') %>
 
-<%- include components/settings-dialog-component.ejs %>
-<%- include components/yesno-dialog-component.ejs %>
-<%- include components/multiselect-dialog-component.ejs %>
-<%- include components/tooltip.ejs %>
+<%- include('components/settings-dialog-component') %>
+<%- include('components/yesno-dialog-component') %>
+<%- include('components/multiselect-dialog-component') %>
+<%- include('components/tooltip') %>
 
 <div class="horizontal status-bar content-centered-vertically">
     <span id="status-text" style="margin-left: 10px"></span>

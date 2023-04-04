@@ -51,7 +51,7 @@ const configureEditor = () => {
   const cookieParser = require('cookie-parser');
   const createError = require('http-errors');
   const logger = require('morgan');
-  const sassMiddleware = require('node-sass-middleware');
+  const sassMiddleware = require('sass-middleware');
 
   // view engine setup
   app.set('views', path.join(__dirname, 'views'));
@@ -71,13 +71,13 @@ const configureEditor = () => {
   }, type: '*/*', limit: '4mb' }));
 
   app.use(cookieParser());
-  app.use(sassMiddleware({
-    src: path.join(__dirname, 'stylesheets'),
-    dest: path.join(__dirname, 'public/stylesheets'),
-    prefix: '/editor/stylesheets',
-    indentedSyntax: true, // true = .sass and false = .scss
-    sourceMap: true,
-  }));
+  // app.use(sassMiddleware({
+  //   src: path.join(__dirname, 'stylesheets'),
+  //   dest: path.join(__dirname, 'public/stylesheets'),
+  //   prefix: '/editor/stylesheets',
+  //   indentedSyntax: true, // true = .sass and false = .scss
+  //   sourceMap: true,
+  // }));
   app.use('/editor', express.static(path.join(__dirname, 'public')));
   app.use('/editor', editorRouter);
   app.use('/game-data', gameDataRouter);
