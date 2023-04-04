@@ -23,28 +23,29 @@
     "opn": "^6.0.0",
     "pkg": "^5.8.1",
     "pngjs": "^3.4.0",
-    "sass-middleware": "^0.0.3",
+    "sass": "^1.60.0",
     "webpack-hot-middleware": "^2.25.0"
   },
   "devDependencies": {
     "@types/gl-matrix": "^2.4.4",
     "concurrently": "^8.0.1",
     "gl-matrix": "^3.0.0",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^3.0.8",
+    "webpack": "^5.1.0",
+    "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.13.2",
-    "webpack-watch-files-plugin": "^1.0.3"
+    "webpack-watch-files-plugin": "^1.2.1"
   },
   "scripts": {
     "game-build": "webpack --config webpack.game.prod.js",
     "game-dev": "webpack-dev-server --config webpack.game.dev.js",
     "distribute": "mkdir -p ../vdp16-dist/lib && mv vdp16-contained* ../vdp16-dist && cp main.js ../vdp16-dist/ && cp index.html ../vdp16-dist/ && cp -r dist ../vdp16-dist/ && cp -r src ../vdp16-dist && cp lib/vdp-lib.js ../vdp16-dist/lib/ && cp lib/vdp-lib.d.ts ../vdp16-dist/lib/",
-    "editor": "node server/server-main.js",
-    "editor-open": "node server/server-main.js --open",
+    "editor": "npm run update-sass && node server/server-main.js",
+    "editor-open": "npm run update-sass && node server/server-main.js --open",
     "editor-build-exe-win32": "npm run editor-build-exe-resources && pkg -t node8-win-x86 . && npm run distribute",
     "editor-build-exe-mac": "npm run editor-build-exe-resources && pkg -t node8-macos-x64 . && npm run distribute",
     "editor-build-exe-linux": "npm run editor-build-exe-resources && pkg -t node8-linux-x86 . && npm run distribute",
-    "editor-build-exe-resources": "sass server/stylesheets/style.sass server/public/stylesheets/style.css && webpack --config server/webpack.editorMain.prod.js"
+    "editor-build-exe-resources": "npm run update-sass && webpack --config server/webpack.editorMain.prod.js",
+    "update-sass": "sass server/stylesheets/style.sass server/public/stylesheets/style.css"
   },
   "author": "",
   "license": "ISC"

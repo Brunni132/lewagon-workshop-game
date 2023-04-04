@@ -51,7 +51,7 @@ const configureEditor = () => {
   const cookieParser = require('cookie-parser');
   const createError = require('http-errors');
   const logger = require('morgan');
-  const sassMiddleware = require('sass-middleware');
+  // const sassMiddleware = require('sass-middleware');
 
   // view engine setup
   app.set('views', path.join(__dirname, 'views'));
