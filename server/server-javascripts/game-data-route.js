@@ -1,41 +1,48 @@
-const express = require('express');
-const router = express.Router();
-const fs = require('fs');
-const PNG = require('pngjs').PNG;
+import { Router } from 'express';
+const router = Router();
+import { readFile, writeFile, createReadStream } from 'fs';
+import { PNG } from 'pngjs';
+import { sync } from 'touch';
+
+function forceHrmGameUpdate() {
+  sync('src/game-main.js')
+}
 
 // Serve game code for read/write
 router.get('/code/game-main.js', (req, res, next) => {
-  fs.readFile('src/game-main.js', (err, text) => res.send(text));
+  readFile('src/game-main.js', (err, text) => res.send(text));
 });
 
 router.post('/code/game-main.js', (req, res, next) => {
-  fs.writeFile('src/game-main.js', req.body, (err, result) => {
+  writeFile('src/game-main.js', req.body, (err, result) => {
     res.sendStatus(200);
   });
 });
 
 router.get('/editor-config.json', (req, res, next) => {
-	fs.readFile('editor-config.json', (err, text) => res.send(text));
+	readFile('editor-config.json', (err, text) => res.send(text));
 });
 
 router.post('/editor-config.json', (req, res, next) => {
-	fs.writeFile('editor-config.json', req.body, (err, result) => {
+	writeFile('editor-config.json', req.body, (err, result) => {
 		res.sendStatus(200);
+    forceHrmGameUpdate();
 	});
 });
 
 router.get('/game.json', (req, res, next) => {
-  fs.readFile('dist/game.json', (err, text) => res.send(text));
+  readFile('dist/game.json', (err, text) => res.send(text));
 });
 
 router.post('/game.json', (req, res, next) => {
-  fs.writeFile('dist/game.json', req.body, (err, result) => {
+  writeFile('dist/game.json', req.body, (err, result) => {
     res.sendStatus(200);
+    forceHrmGameUpdate();
   });
 });
 
 router.get('/palettes.png', (req, res, next) => {
-  fs.createReadStream('dist/palettes.png')
+  createReadStream('dist/palettes.png')
     .pipe(new PNG())
     .on('parsed', function(png) {
       const width = this.width;
@@ -46,13 +53,14 @@ router.get('/palettes.png', (req, res, next) => {
 });
 
 router.post('/palettes.png', (req, res, next) => {
-  fs.writeFile('dist/palettes.png', req.rawBody, (err, result) => {
+  writeFile('dist/palettes.png', req.rawBody, (err, result) => {
     res.sendStatus(200);
+    forceHrmGameUpdate();
   });
 });
 
 router.get('/sprites.png', (req, res, next) => {
-  fs.createReadStream('dist/sprites.png')
+  createReadStream('dist/sprites.png')
     .pipe(new PNG())
     .on('parsed', function(png) {
       const { width, height } = this;
@@ -62,13 +70,14 @@ router.get('/sprites.png', (req, res, next) => {
 });
 
 router.post('/sprites.png', (req, res, next) => {
-  fs.writeFile('dist/sprites.png', req.rawBody, (err, result) => {
+  writeFile('dist/sprites.png', req.rawBody, (err, result) => {
     res.sendStatus(200);
+    forceHrmGameUpdate();
   });
 });
 
 router.get('/maps.png', (req, res, next) => {
-  fs.createReadStream('dist/maps.png')
+  createReadStream('dist/maps.png')
     .pipe(new PNG())
     .on('parsed', function(png) {
       const { width, height } = this;
@@ -78,9 +87,10 @@ router.get('/maps.png', (req, res, next) => {
 });
 
 router.post('/maps.png', (req, res, next) => {
-  fs.writeFile('dist/maps.png', req.rawBody, (err, result) => {
+  writeFile('dist/maps.png', req.rawBody, (err, result) => {
     res.sendStatus(200);
+    forceHrmGameUpdate();
   });
 });
 
-module.exports = router;
+export default router;

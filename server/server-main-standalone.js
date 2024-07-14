@@ -1,11 +1,12 @@
-const express = require('express');
-const path = require('path');
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const ejs = require('ejs'); // for pkg to include it
+import express, { json, urlencoded } from 'express';
+import { join } from 'path';
+import webpack, { HotModuleReplacementPlugin } from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import ejs from 'ejs'; // for pkg to include it
+import open from 'open';
 
-const editorRouter = require('./server-javascripts/editor-route');
-const gameDataRouter = require('./server-javascripts/game-data-route');
+import editorRouter from './server-javascripts/editor-route';
+import gameDataRouter from './server-javascripts/game-data-route';
 
 const app = express();
 const port = 3000;
@@ -25,7 +26,7 @@ const configureWebpackForGame = () => {
   // reload=true:Enable auto reloading when changing JS files or content
   // timeout=1000:Time from disconnecting from server to reconnecting
   // config.entry.app.unshift('webpack-hot-middleware/client?reload=true&timeout=1000');
-  config.plugins.push(new webpack.HotModuleReplacementPlugin());
+  config.plugins.push(new HotModuleReplacementPlugin());
 
   // Webpack + middlewares for hot reloading
   const compiler = webpack(config);
@@ -45,12 +46,12 @@ const configureEditor = () => {
   const logger = require('morgan');
 
   // view engine setup
-  app.set('views', path.join(__dirname, 'views'));
+  app.set('views', join(__dirname, 'views'));
   app.set('view engine', 'ejs');
 
   app.use(logger('dev'));
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: false }));
+  app.use(json());
+  app.use(urlencoded({ extended: false }));
   // Necessary to simply get text as a response (?)
   app.use(bodyParser.text({ type: 'text/plain' }));
   // Catch all the rest as binary
@@ -62,7 +63,7 @@ const configureEditor = () => {
   }, type: '*/*', limit: '4mb' }));
 
   app.use(cookieParser());
-  app.use('/editor', express.static(path.join(__dirname, 'public')));
+  app.use('/editor', express.static(join(__dirname, 'public')));
   app.use('/editor', editorRouter);
   app.use('/game-data', gameDataRouter);
 
@@ -89,6 +90,6 @@ configureEditor();
 
 app.listen(port, () => {
   if (openUrls) {
-    require('opn')('http://localhost:3000/editor');
+    open('http://localhost:3000/editor');
   }
 });

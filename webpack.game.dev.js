@@ -1,30 +1,28 @@
-const path = require('path');
-const WatchFilesPlugin = require('webpack-watch-files-plugin').default;
+import { resolve as _resolve } from 'path';
+import WatchFilesPlugin from 'webpack-watch-files-plugin';
 
-module.exports = {
-	entry: {
-		app: ['./main.js']
-	},
-	devtool: 'inline-source-map',
-	devServer: {
-		port: 3000,
-		open: true,
-	},
-	plugins: [
-		new WatchFilesPlugin({ // TODO doesn't trigger HRM, debug…
-			files: [
-				'./dist/game.json'
-			]
-		})
-	],
-	resolve: {
-		extensions: [ '.js' ]
-	},
-	output: {
-		path: path.resolve(__dirname, 'dist'),
-		publicPath: '/dist/',
-		filename: 'game.bundle.js'
-	},
-	mode: 'development',
-	watch: true
+export const entry = {
+	app: ['./main.js']
 };
+export const devtool = 'inline-source-map';
+export const devServer = {
+	port: 3000,
+	open: true,
+};
+export const plugins = [
+	new WatchFilesPlugin({
+		files: [
+			'./dist/game.json'
+		]
+	})
+];
+export const resolve = {
+	extensions: ['.js']
+};
+export const output = {
+	path: _resolve(__dirname, 'dist'),
+	publicPath: '/dist/',
+	filename: 'game.bundle.js'
+};
+export const mode = 'development';
+export const watch = true;

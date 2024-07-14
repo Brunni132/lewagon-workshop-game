@@ -4,6 +4,7 @@
   "description": "TODO",
   "main": "server/server-main-standalone.js",
   "bin": "server/server-main-standalone.js",
+  "type": "module",
   "pkg": {
     "assets": [
       "server/public/**/*",
@@ -20,10 +21,11 @@
     "file-saver": "^2.0.2",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "opn": "^6.0.0",
+    "open": "^9.1.0",
     "pkg": "^5.8.1",
     "pngjs": "^3.4.0",
     "sass": "^1.60.0",
+    "touch": "^3.1.0",
     "webpack-hot-middleware": "^2.25.0"
   },
   "devDependencies": {

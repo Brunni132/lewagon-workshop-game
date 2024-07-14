@@ -1,16 +1,14 @@
-const path = require('path');
+import { resolve as _resolve } from 'path';
 //const CopyWebpackPlugin = require('copy-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+import TerserPlugin from 'terser-webpack-plugin';
 
-module.exports = {
-  entry: './main.js',
-  devtool: false,
-  resolve: {
-    extensions: [ '.js' ]
-  },
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'game.bundle.js'
-  },
-  mode: 'production',
+export const entry = './main.js';
+export const devtool = false;
+export const resolve = {
+  extensions: ['.js']
 };
+export const output = {
+  path: _resolve(__dirname, 'dist'),
+  filename: 'game.bundle.js'
+};
+export const mode = 'production';
